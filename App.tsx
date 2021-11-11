@@ -10,40 +10,22 @@ import {
   ActivityIndicator,
   FlatList,
   ListRenderItem,
-  SectionList,
 } from 'react-native';
 
 import {
   Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import { HttpClient, Hub, ID } from './api';
 
 const Section: React.FC<{
   title: string;
 }> = ({ children, title }) => {
-  const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
+      <Text style={[styles.sectionTitle]}>
         {title}
       </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
+      <Text style={[styles.sectionDescription]}>
         {children}
       </Text>
     </View>
@@ -88,12 +70,9 @@ const App = () => {
   );
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        style={{
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
-        }}>
+      <ScrollView>
         <Section title="User Info">
           Your WICRS user ID is <Text style={styles.highlight}>{user_id}</Text>.
         </Section>
@@ -112,10 +91,6 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
