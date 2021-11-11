@@ -152,6 +152,7 @@ export class HttpClient {
         }
         return await this.http(url, {
             method: "POST",
+            mode: 'cors',
             headers: {
                 "Authorization": this.auth,
                 "Content-type": content_type

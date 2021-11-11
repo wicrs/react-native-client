@@ -9,6 +9,7 @@ export default function App() {
   const client = new HttpClient("http://localhost:8080/api", user_id);
   const [isLoading, setLoading] = useState(true);
   const [data, setData]: [ID | undefined, any] = useState();
+  console.log("test");
 
   const createHub = async () => {
     try {
@@ -23,6 +24,7 @@ export default function App() {
 
   useEffect(() => {
     createHub();
+    console.log("done");
   }, []);
 
   return (
