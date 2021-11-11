@@ -9,6 +9,7 @@ import {
   View,
   ActivityIndicator,
   FlatList,
+  ListRenderItem,
   SectionList,
 } from 'react-native';
 
@@ -77,37 +78,44 @@ const App = () => {
     createHub();
   }, []);
 
+  interface HubInfoItem {
+    id: ID;
+    data: string;
+  }
+
+  const renderItem: ListRenderItem<HubInfoItem> = ({ item }) => (
+    <Text>{item.id}: {item.data}</Text>
+  );
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="User Info">
-            Your WICRS user ID is <Text style={styles.highlight}>{user_id}</Text>.
-          </Section>
-          <Section title="Hub Info">
-            <Text>A hub {isLoading ? "is being" : "has been"} created for you.</Text>
-          </Section>
-          <Section title={''}>{isLoading ? <ActivityIndicator /> : (
-            <Text>
-              <FlatList
-                data={[["ID", hub?.id], ["Name", hub?.name], ["Description", hub?.description], ["Created", hub?.created.toString()], ["Owner", hub?.owner], ["Default Group", hub?.default_group]]}
-                renderItem={({ item }) => <Text>{item[0]}: {item[1]}</Text>} />
-            </Text>
-          )}</Section>
-        </View>
+        style={{
+          backgroundColor: isDarkMode ? Colors.black : Colors.white,
+        }}>
+        <Section title="User Info">
+          Your WICRS user ID is <Text style={styles.highlight}>{user_id}</Text>.
+        </Section>
+        <Section title="Hub Info">
+          {isLoading ? <ActivityIndicator /> : (
+            <FlatList
+              data={[{ id: "ID", data: hub!.id }, { id: "Name", data: hub!.name }, { id: "Description", data: hub!.description }]}
+              renderItem={renderItem}
+              scrollEnabled={false}
+              keyExtractor={item => item.id} />
+          )}
+        </Section>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
