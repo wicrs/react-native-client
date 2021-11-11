@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   FlatList,
   ListRenderItem,
+  LogBox,
 } from 'react-native';
 
 import {
@@ -25,7 +26,7 @@ const Section: React.FC<{
       <Text style={[styles.sectionTitle]}>
         {title}
       </Text>
-      <Text style={[styles.sectionDescription]}>
+      <Text>
         {children}
       </Text>
     </View>
@@ -58,6 +59,7 @@ const App = () => {
 
   useEffect(() => {
     createHub();
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, []);
 
   interface HubInfoItem {
@@ -98,11 +100,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
   },
   highlight: {
     fontWeight: '700',
